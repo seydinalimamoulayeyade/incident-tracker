@@ -1,15 +1,22 @@
-import React, { useState } from 'react';
-import useIncidents from './hooks/useIncidents';
-import IncidentList from './components/IncidentList/IncidentList';
-import IncidentForm from './components/IncidentForm/IncidentForm';
-import IncidentDetail from './components/IncidentDetail/IncidentDetail';
-import Loader from './components/shared/Loader';
+import React, { useState } from "react";
+import useIncidents from "./hooks/useIncidents";
+import IncidentList from "./components/IncidentList/IncidentList";
+import IncidentForm from "./components/IncidentForm/IncidentForm";
+import IncidentDetail from "./components/IncidentDetail/IncidentDetail";
+import Loader from "./components/shared/Loader";
 
 const App = () => {
-  const { incidents, loading, error, createIncident, updateIncident, deleteIncident } = useIncidents();
-  const [showForm,    setShowForm]    = useState(false);
+  const {
+    incidents,
+    loading,
+    error,
+    createIncident,
+    updateIncident,
+    deleteIncident,
+  } = useIncidents();
+  const [showForm, setShowForm] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
-  const [selected,    setSelected]    = useState(null);
+  const [selected, setSelected] = useState(null);
 
   const handleCreate = async (payload) => {
     setFormLoading(true);
@@ -25,20 +32,60 @@ const App = () => {
   };
 
   return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '32px 20px' }}>
-
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', borderBottom: '1px solid var(--border)', paddingBottom: '20px' }}>
-        <div>
-          <h1 style={{ fontSize: '1.75rem', fontWeight: '700' }}>🚨 Incident Tracker</h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginTop: '4px' }}>
-            Gestion et suivi des incidents de production
-          </p>
+    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 20px" }}>
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "40px",
+          borderBottom: "1px solid var(--border)",
+          paddingBottom: "24px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              width: "36px",
+              height: "36px",
+              background: "var(--accent-muted)",
+              border: "1px solid var(--accent-border)",
+              borderRadius: "var(--radius)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "18px",
+            }}
+          >
+            🚨
+          </div>
+          <div>
+            <h1
+              style={{
+                fontSize: "1.2rem",
+                fontWeight: "700",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Incident Tracker
+            </h1>
+            <p
+              style={{
+                color: "var(--text-secondary)",
+                fontSize: "0.75rem",
+                marginTop: "1px",
+              }}
+            >
+              Gestion des incidents de production
+            </p>
+          </div>
         </div>
+
         <button
+          className={showForm ? "btn-secondary" : "btn-primary"}
           onClick={() => setShowForm((v) => !v)}
-          style={{ padding: '10px 20px', background: showForm ? 'transparent' : 'var(--accent)', color: showForm ? 'var(--text-secondary)' : '#fff', border: showForm ? '1px solid var(--border)' : 'none', borderRadius: 'var(--radius)', fontWeight: '500' }}
         >
-          {showForm ? 'Annuler' : '+ Nouvel incident'}
+          {showForm ? "Annuler" : "+ Nouvel incident"}
         </button>
       </header>
 
@@ -50,8 +97,18 @@ const App = () => {
         />
       )}
 
-      {loading  && <Loader />}
-      {error    && <p style={{ color: 'var(--danger)', textAlign: 'center', padding: '40px' }}>{error}</p>}
+      {loading && <Loader />}
+      {error && (
+        <p
+          style={{
+            color: "var(--danger)",
+            textAlign: "center",
+            padding: "40px",
+          }}
+        >
+          {error}
+        </p>
+      )}
       {!loading && !error && (
         <IncidentList
           incidents={incidents}
