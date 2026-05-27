@@ -13,11 +13,12 @@ const useIncidents = (filters = {}) => {
       const data = await incidentService.getAll(filters);
       setIncidents(data);
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to fetch incidents');
+      setError(err.response?.data?.message || 'Erreur lors du chargement des incidents');
     } finally {
       setLoading(false);
     }
-  }, [JSON.stringify(filters)]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     fetchIncidents();
@@ -40,15 +41,7 @@ const useIncidents = (filters = {}) => {
     setIncidents((prev) => prev.filter((i) => i._id !== id));
   };
 
-  return {
-    incidents,
-    loading,
-    error,
-    refetch: fetchIncidents,
-    createIncident,
-    updateIncident,
-    deleteIncident,
-  };
+  return { incidents, loading, error, refetch: fetchIncidents, createIncident, updateIncident, deleteIncident };
 };
 
 export default useIncidents;
