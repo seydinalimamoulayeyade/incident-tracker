@@ -1,0 +1,49 @@
+/* Variables */
+:root {
+  --bg-primary:    #0f172a;
+  --bg-secondary:  #1e293b;
+  --bg-card:       #1e293b;
+  --border:        #334155;
+  --text-primary:  #f1f5f9;
+  --text-secondary:#94a3b8;
+  --accent:        #3b82f6;
+  --accent-hover:  #2563eb;
+  --danger:        #ef4444;
+  --success:       #22c55e;
+  --radius:        8px;
+  --transition:    0.2s ease;
+}
+
+/* Reset */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  transition: background var(--transition), opacity var(--transition);
+}
+
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+input, select, textarea {
+  font-family: inherit;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  width: 100%;
+  outline: none;
+  transition: border-color var(--transition);
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+}
