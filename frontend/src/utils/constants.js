@@ -6,12 +6,12 @@ export const PRIORITY_CONFIG = {
 };
 
 export const STATUS_CONFIG = {
-  'open':        { label: 'Open',        color: '#3b82f6' },
+  'open':        { label: 'Open',        color: '#f97316' },
   'in-progress': { label: 'In Progress', color: '#f59e0b' },
   'resolved':    { label: 'Resolved',    color: '#22c55e' },
   'closed':      { label: 'Closed',      color: '#6b7280' },
 };
 
-export const SEVERITY_OPTIONS  = ['minor', 'major', 'critical'];
-export const PRIORITY_OPTIONS  = ['low', 'medium', 'high', 'critical'];
-export const STATUS_OPTIONS    = ['open', 'in-progress', 'resolved', 'closed'];
+export const SEVERITY_OPTIONS = ['minor', 'major', 'critical'];
+export const PRIORITY_OPTIONS = ['low', 'medium', 'high', 'critical'];
+export const STATUS_OPTIONS   = ['open', 'in-progress', 'resolved', 'closed'];
