@@ -4,6 +4,7 @@ import IncidentList from "./components/IncidentList/IncidentList";
 import IncidentForm from "./components/IncidentForm/IncidentForm";
 import IncidentDetail from "./components/IncidentDetail/IncidentDetail";
 import Loader from "./components/shared/Loader";
+import Logo from "./components/shared/Logo";
 
 const App = () => {
   const {
@@ -32,91 +33,83 @@ const App = () => {
   };
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "32px 20px" }}>
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "40px",
-          borderBottom: "1px solid var(--border)",
-          paddingBottom: "24px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              background: "var(--accent-muted)",
-              border: "1px solid var(--accent-border)",
-              borderRadius: "var(--radius)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "18px",
-            }}
-          >
-            🚨
+    <div className="min-h-screen bg-gh-canvas text-gh-fg flex flex-col">
+      {/* Barre de navigation */}
+      <header className="bg-gh-header border-b border-gh-border">
+        <div className="max-w-changelog mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center h-16 gap-6">
+            <Logo size={30} />
+            <div className="ml-auto flex items-center gap-3">
+              <button
+                onClick={() => setShowForm((v) => !v)}
+                className={
+                  showForm
+                    ? "px-3 py-1.5 text-sm font-medium rounded-md border border-gh-border text-gh-fg-muted hover:text-gh-fg hover:bg-gh-elevated transition-colors"
+                    : "px-3 py-1.5 text-sm font-medium rounded-md text-white bg-gradient-to-r from-brand to-brand-cyan hover:opacity-90 transition-opacity"
+                }
+              >
+                {showForm ? "Annuler" : "+ Nouvel incident"}
+              </button>
+            </div>
           </div>
-          <div>
-            <h1
-              style={{
-                fontSize: "1.2rem",
-                fontWeight: "700",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Incident Tracker
+        </div>
+      </header>
+
+      {/* En-tête héro avec grille */}
+      <div className="gh-grid border-b border-gh-border">
+        <div className="max-w-changelog mx-auto px-4 sm:px-6 lg:px-8 pt-10 pb-12">
+          <p className="gh-mono-label text-xs text-gh-fg-muted mb-6">
+            Gestion des incidents de production
+          </p>
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <h1 className="text-5xl sm:text-6xl font-bold tracking-tight">
+              <span className="text-gh-fg">Incident</span>
+              <span className="bg-gradient-to-r from-brand to-brand-cyan bg-clip-text text-transparent">
+                {" "}Tracker
+              </span>
             </h1>
-            <p
-              style={{
-                color: "var(--text-secondary)",
-                fontSize: "0.75rem",
-                marginTop: "1px",
-              }}
-            >
-              Gestion des incidents de production
+            <p className="gh-mono-label text-xs text-gh-fg-subtle">
+              MERN · Docker · Slack
             </p>
           </div>
         </div>
+      </div>
 
-        <button
-          className={showForm ? "btn-secondary" : "btn-primary"}
-          onClick={() => setShowForm((v) => !v)}
-        >
-          {showForm ? "Annuler" : "+ Nouvel incident"}
-        </button>
-      </header>
+      {/* Contenu principal */}
+      <main className="flex-1 max-w-changelog mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+        {showForm && (
+          <IncidentForm
+            onSubmit={handleCreate}
+            onCancel={() => setShowForm(false)}
+            loading={formLoading}
+          />
+        )}
 
-      {showForm && (
-        <IncidentForm
-          onSubmit={handleCreate}
-          onCancel={() => setShowForm(false)}
-          loading={formLoading}
-        />
-      )}
+        {loading && <Loader />}
+        {error && (
+          <div className="my-6 p-4 rounded-md border border-gh-danger-fg/40 bg-gh-danger-subtle text-gh-danger-fg text-sm text-center">
+            {error}
+          </div>
+        )}
+        {!loading && !error && (
+          <IncidentList
+            incidents={incidents}
+            onUpdate={handleUpdate}
+            onDelete={deleteIncident}
+            onSelect={setSelected}
+          />
+        )}
+      </main>
 
-      {loading && <Loader />}
-      {error && (
-        <p
-          style={{
-            color: "var(--danger)",
-            textAlign: "center",
-            padding: "40px",
-          }}
-        >
-          {error}
-        </p>
-      )}
-      {!loading && !error && (
-        <IncidentList
-          incidents={incidents}
-          onUpdate={handleUpdate}
-          onDelete={deleteIncident}
-          onSelect={setSelected}
-        />
-      )}
+      {/* Pied de page */}
+      <footer className="border-t border-gh-border mt-auto">
+        <div className="max-w-changelog mx-auto px-4 sm:px-6 lg:px-8 py-6 flex items-center gap-3">
+          <Logo size={20} withText={false} />
+          <p className="gh-mono-label text-xs text-gh-fg-muted">
+            Incident Tracker — Suivi des incidents en temps réel
+          </p>
+        </div>
+      </footer>
 
       {selected && (
         <IncidentDetail
